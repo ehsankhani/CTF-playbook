@@ -33,9 +33,9 @@ No encryption beyond Morse—just dots, dashes, and spacing.
 
 ## Tools
 
-1. https://cryptii.com/pipes/morse-code-translator
-2. https://morsecodetranslator.com/
-* or any online morse code decoder
+https://cryptii.com/pipes/morse-code-translator
+https://morsecodetranslator.com/
+or any morse code decoder
 
 ---
 
@@ -43,7 +43,7 @@ No encryption beyond Morse—just dots, dashes, and spacing.
 
 
 1. Open the file titled `hello my little champ!` and copy its entire contents.
-2. Paste the Morse code into a reliable online decoder (e.g., morsecode.world or dcode.fr or the ones that are metioned in the `tools`).
+2. Paste the Morse code into a reliable online decoder (e.g., morsecode.world or dcode.fr).
 3. Decode the message and extract the flag from the output.
 
 ---
@@ -56,7 +56,7 @@ No encryption beyond Morse—just dots, dashes, and spacing.
 
 ## Screenshots
 
-![Morse code file preview](../../../../assets/morse_code.jpg)
+![Morse code file preview](../../../assets/morse_code.jpg)
 
 ---
 
@@ -66,9 +66,9 @@ No encryption beyond Morse—just dots, dashes, and spacing.
 /Cryptography/
   /The Legend of Encyron/
     /Question/
-      hello my little champ!      # main file containing the morse code
-      question-en.docx            # english question
-      question-fa.docx            # persian question
+      hello my little champ! #main file containing the morse code
+      question-en.docx  #english question
+      question-fa.docx  #persian question
     /Answer/
-      hello my little champ!.md   # markdown file explaining the answer
+      hello my little champ!.md #markdown file explaining the answer
 ```
