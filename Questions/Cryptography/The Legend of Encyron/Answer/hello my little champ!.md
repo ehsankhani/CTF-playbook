@@ -56,7 +56,7 @@ or any morse code decoder
 
 ## Screenshots
 
-![Morse code file preview](../../../assets/morse_code.jpg)
+![Morse code file preview](../../../../assets/morse_code.jpg)
 
 ---
 
