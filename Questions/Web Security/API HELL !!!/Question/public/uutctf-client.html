@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUTCTF API Client</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    h1 {
+      margin-bottom: 2rem;
+    }
+    .method {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    button {
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #0060df;
+    }
+    #output {
+      background-color: #f7f7f7;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 2rem;
+      white-space: pre-wrap;
+      font-family: monospace;
+      min-height: 200px;
+    }
+    .timestamps {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>UUTCTF API Client</h1>
+  
+  <div class="method">
+    <h2>API Challenge</h2>
+    <p>Connect to the API and see what happens.</p>
+    <button id="btnStart">Connect to API</button>
+  </div>
+  
+  <div id="output">Results will appear here...</div>
+  
+  <script>
+    const output = document.getElementById('output');
+    let flagTimer = null;
+    let startTime = null;
+    let fixedTime = 1800;
+    let statusCheckInterval = null;
+    
+    function appendOutput(text, isTimestamp = false) {
+      const line = document.createElement('div');
+      if (isTimestamp) {
+        line.classList.add('timestamps');
+      }
+      line.textContent = text;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+    
+    function clearOutput() {
+      output.innerHTML = '';
+    }
+    
+    async function fetchFlag() {
+      try {
+        const response = await fetch('/api/uutctf?part=flag');
+        const data = await response.json();
+        
+        appendOutput(`Message: ${data.message}`);
+        appendOutput(`Timestamp: ${data.timestamp}`, true);
+        
+        localStorage.removeItem('uutctf_start_time');
+      } catch (err) {
+        console.error("Error fetching flag:", err);
+        setTimeout(fetchFlag, 5000);
+      }
+    }
+    
+   document.getElementById('btnStart').addEventListener('click', () => {
+      const savedStartTime = localStorage.getItem('uutctf_start_time');
+      if (savedStartTime) {
+        const parsedTime = parseInt(savedStartTime, 10);
+        if (!isNaN(parsedTime)) {
+          const elapsed = Math.floor((Date.now() - parsedTime) / 1000);
+          
+          if (elapsed >= fixedTime) {
+            clearOutput();
+            appendOutput('Reconnecting to API...');
+            fetchFlag();
+          } else {
+            startTime = parsedTime;
+            clearOutput();
+            appendOutput('Reconnected to API.');
+            appendOutput('Previous message: I Hate APIs :(');
+            
+            const remainingTime = (1800 - elapsed) * 1000;
+            flagTimer = setTimeout(fetchFlag, remainingTime);
+          }
+        }
+      }
+    });
+    
+    document.getElementById('btnStart').addEventListener('click', async () => {
+      if (flagTimer) clearTimeout(flagTimer);
+      if (statusCheckInterval) clearInterval(statusCheckInterval);
+      
+      clearOutput();
+      appendOutput('Connecting to API...');
+      
+      try {
+        const response = await fetch('/api/uutctf');
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          const text = decoder.decode(value);
+          const lines = text.split('\n').filter(line => line.trim());
+          
+          for (const line of lines) {
+            try {
+              const data = JSON.parse(line);
+              appendOutput(`Message: ${data.message}`);
+              appendOutput(`Timestamp: ${data.timestamp}`, true);
+              appendOutput('');
+              
+              startTime = Date.now();
+              localStorage.setItem('uutctf_start_time', startTime.toString());
+              
+              flagTimer = setTimeout(fetchFlag, 1800 * 1000);
+              
+              statusCheckInterval = setInterval(() => {
+                localStorage.setItem('uutctf_start_time', startTime.toString());
+              }, 30000);
+            } catch (err) {
+              appendOutput(`Raw data: ${line}`);
+            }
+          }
+        }
+      } catch (err) {
+        appendOutput(`Error: ${err.message}`);
+        appendOutput('Please try connecting again.');
+      }
+    });
+  </script>
+</body>
+</html> 
