@@ -1,8 +1,8 @@
 ## Title
 
-`Voice` — `Stegnography` (`Points: unknown`)
+`Voice` — `Stegnography` (`Points: 175`)
 
-* **Author:** `Mahdi Ranjkesh` • **Date:** `2025-10-01`
+* **Author:** `Mahdi` • **Date:** `2025-10-01`
 
 ---
 
@@ -55,6 +55,7 @@ Files:
 5. Zoom vertically and horizontally (View → Zoom) until the text in the spectrogram is legible. The hidden string/flag will appear as readable letters drawn in the frequency domain.
 6. Copy the visible string. In this challenge the spectrogram shows the base64 string `U2hlcmxvY2tfRmxhZ19ob2xtZXM=`.
 7. Decode the base64 string to readable text. Example using Python 3:
+tip --> you can use online ones like : (https://cryptii.com/pipes/base64-to-text)
 
 ```bash
 python -c "import base64;print(base64.b64decode('U2hlcmxvY2tfRmxhZ19ob2xtZXM=').decode())"
@@ -82,7 +83,7 @@ Decoded flag:
 
 ## Screenshots
 
-One small screenshot of the Audacity spectrogram view is included .
+One small screenshot of the Audacity spectrogram view is included (place the image in the repository `assets/` directory and name it `Voice.png` or `Voice.jpg`).
 
 Example embed (relative path from this file):
 
@@ -95,6 +96,7 @@ _Caption:_ Spectrogram view in Audacity where the base64 string is visible.
 ## Short fix for authors
 
 No vulnerability — this is a steganography challenge. If accidental leakage is undesired, avoid publishing raw media with visible spectrogram content.
+
 
 ---
 
@@ -109,5 +111,3 @@ No vulnerability — this is a steganography challenge. If accidental leakage is
     /Answer/
       README.md  # this file
 ```
-
-End of write-up.
