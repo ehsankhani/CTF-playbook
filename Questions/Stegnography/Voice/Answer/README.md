@@ -2,7 +2,7 @@
 
 `Voice` — `Stegnography` (`Points: unknown`)
 
-* **Author:** `Mahdi` • **Date:** `2025-10-01`
+* **Author:** `Mahdi Ranjkesh` • **Date:** `2025-10-01`
 
 ---
 
@@ -82,7 +82,7 @@ Decoded flag:
 
 ## Screenshots
 
-One small screenshot of the Audacity spectrogram view is included (place the image in the repository `assets/` directory and name it `Voice.png` or `Voice.jpg`).
+One small screenshot of the Audacity spectrogram view is included .
 
 Example embed (relative path from this file):
 
@@ -95,14 +95,6 @@ _Caption:_ Spectrogram view in Audacity where the base64 string is visible.
 ## Short fix for authors
 
 No vulnerability — this is a steganography challenge. If accidental leakage is undesired, avoid publishing raw media with visible spectrogram content.
-
----
-
-## Checklist before publish
-
-- [x] Remove private IPs / credentials (none present)
-- [x] Add tags and difficulty
-- [x] Commit a small screenshot under `assets/Voice.png` (requested: uploader will add this file)
 
 ---
 
