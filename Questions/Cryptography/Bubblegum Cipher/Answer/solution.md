@@ -46,7 +46,7 @@ The goal was to decode it and retrieve the flag.
 ## Steps (reproducible)
 
 1. Install the required library
-  ```bash
+
   pip3 install bubblepy
 
 2. Python one-liner (fastest)
